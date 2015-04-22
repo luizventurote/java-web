@@ -1,0 +1,788 @@
+// Theme Name: Super Admin
+// Theme URI: https://github.com/luizventurote/super-admin
+// Author: Luiz Venturote
+// Author URI: http://www.luizventurote.com/
+// Description: This is a admin framework for new projects.
+
+
+// === Imports ================================================================================= //
+@import "_media-queries";
+@import "_mixins";
+@import "_fonts";
+@import "_reset";
+@import "_base";
+
+
+// === Variables =============================================================================== //
+$font-df: 13px;
+$df-font-color: #3a3939;
+$df-border-color: #cfcfcf;
+$menu-bg: #ececec;
+
+
+// Media queries
+$bp-sm-min: 768px;
+
+ 
+// === Mixins ================================================================================== //
+// Border Radius
+@mixin borderRadius($radius: 5px) {
+	-webkit-border-radius:  $radius;
+	-moz-border-radius: 	$radius;
+	border-radius: 			$radius;
+}
+
+// Box Shadow
+@mixin boxShadow($x:5px , $y:5px, $blur:5px, $color:#000) {
+	-webkit-box-shadow: $x $y $blur $color;
+	-moz-box-shadow:    $x $y $blur $color;
+	box-shadow:         $x $y $blur $color;
+}
+
+// Transition Effect
+@mixin transitionEffect($time:0.25s){
+	-webkit-transition: all $time ease-in-out;
+	-moz-transition: 	all $time ease-in-out;
+	-o-transition: 		all $time ease-in-out;
+	-ms-transition: 	all $time ease-in-out;
+	transition: 		all $time ease-in-out;
+}
+
+@mixin Translate($x: 0px, $y: 0px) {
+    -webkit-transform: translate($x, $y);
+    -moz-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    -o-transform: translate($x, $y);
+    transform: translate($x, $y); 
+}
+
+// Opacity
+@mixin Opacity($value: 0.5){
+    $aux_value: $value * 100;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=$aux_value);
+    -moz-opacity:$value;
+    -khtml-opacity: $value;
+    opacity: $value;
+}
+
+// Transforns
+@mixin translateY($value: 0%) {
+    -webkit-transform: translateY($value);
+    -moz-transform: translateY($value);
+    -o-transform: translateY($value);
+    -ms-transform: translateY($value);
+    transform: translateY($value);
+}
+
+// Gradients
+@mixin gradientToBottom($color1: #aaa, $color2: #222) {
+    background: $color1;    
+    background-image: linear-gradient(to bottom, $color1, $color2);
+    background-image: -o-linear-gradient(bottom, $color1, $color2);
+    background-image: -moz-linear-gradient(bottom, $color1, $color2);
+    background-image: -webkit-linear-gradient(bottom, $color1, $color2);
+    background-image: -ms-linear-gradient(bottom, $color1, $color2);
+}
+
+// Font Smoothing
+@mixin fontSmoothing() {
+}
+
+
+// === Fonts =================================================================================== //
+@font-face {
+    font-family: 'open_sanslight';
+    src: url('../fonts/OpenSans-Light-webfont.eot');
+    src: url('../fonts/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Light-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Light-webfont.ttf') format('truetype'),
+         url('../fonts/OpenSans-Light-webfont.svg#open_sanslight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('../fonts/OpenSans-Regular-webfont.eot');
+    src: url('../fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'open_sanssemibold';
+    src: url('../fonts/OpenSans-Semibold-webfont.eot');
+    src: url('../fonts/OpenSans-Semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/OpenSans-Semibold-webfont.woff') format('woff'),
+         url('../fonts/OpenSans-Semibold-webfont.ttf') format('truetype'),
+         url('../fonts/OpenSans-Semibold-webfont.svg#open_sanssemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+// Font Light
+@mixin FontLight() {
+	font-family: 'open_sanslight', Helvetica, Arial, sans-serif;
+}
+
+// Font Regular
+@mixin FontRegular() {
+	font-family: 'open_sansregular', Helvetica, Arial, sans-serif;
+}
+
+// Font Bold
+@mixin FontBold() {
+	font-family: 'open_sanssemibold', Helvetica, Arial, sans-serif;
+}
+
+
+/* ============================================================================================= */
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+// Clean FIx
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+ 
+.clearfix {
+    display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+    display: block;
+}
+ 
+* html .clearfix {
+    height: 1%;
+}
+
+// Effects
+.effect {
+    @include transitionEffect();
+}
+
+// Transparent 
+.transparent {
+    @include Opacity(0.8);  
+}
+
+// Neutral style
+.neutral-sty {
+    color: #fff;
+    background: #3a3939;
+    text-shadow: 0 2px 3px #000;
+}
+
+
+/* === Structure =============================================================================== */
+body {
+	@include FontRegular();
+	font-size: $font-df;
+    color: $df-font-color;
+    text-rendering: optimizeLegibility;
+    @include fontSmoothing();
+}
+
+main {
+    display: block;
+}
+
+.wrapper {
+    min-width: 320px;
+}
+
+.container {
+    max-width: 960px;
+    margin: auto;
+    padding: 0;
+}
+
+.page {
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    z-index: 1;
+    backface-visibility: hidden;
+    @include Translate(0px);
+    @extend .effect;
+
+    &.menu-open {
+        @include Translate(200px);
+    }
+}
+
+// Content
+.content {
+    overflow: hidden;
+    padding: 20px;
+    vertical-align: top;
+}
+
+
+/* === Elements ================================================================================ */
+a {
+    @extend .effect;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    @include FontRegular();
+    font-size: 2.4rem;
+    text-transform: uppercase;
+}
+
+h2 {
+    @extend h1;
+    font-size: 2.2rem;
+}
+
+h3 {
+    @extend h1;
+    font-size: 2rem;
+}
+
+h4 {
+    @extend h1;
+    font-size: 1.8rem;
+}
+
+h5 {
+    @extend h1;
+    font-size: 1.6rem;
+}
+
+h6 {
+    @extend h1;
+    font-size: 1.35rem;
+}
+
+// Titles
+.title-1 {
+    @extend h1;
+}
+
+.title-2 {
+    @extend h2;
+}
+
+.title-3 {
+    @extend h3;
+}
+
+.title-4 {
+    @extend h4;
+}
+
+.title-5 {
+    @extend h5;
+}
+
+.title-6 {
+    @extend h6;
+}
+
+.page-title {
+    @include FontBold();
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+// Navbar
+.top-bar {
+    display: block;
+    width: 100%;
+    @include borderRadius(0);
+    @extend .neutral-sty;
+    z-index: 10;
+
+    .top-bar-brand {
+        width: 100%;
+        padding: 5px 0 5px;
+        float: none;
+    }
+
+    .top-bar-nav {
+        width: 100%;
+        padding: 0 10px 0 0;
+        display: block;
+        margin: 0;
+        float: none;
+        background: #424242;
+        text-align: right;
+
+        .dropdown:last-child {
+            padding-right: 0;
+        }
+    }
+
+    .top-bar-item {   
+        border-left: 1px solid #3a3939;
+        margin-left: -4px;
+        padding: 0 8px;
+        color: #fff;
+    }
+}
+
+.top-bar-box {
+    display: inline-block;
+
+    &:hover {
+        background: #5b5b5b;
+    }
+
+    &:active {
+        background: #5b5b5b;
+    }
+
+    .tb-box-item {
+        display: inline-block;
+        margin: 0px;
+        padding: 7px 10px 7px;
+        position: relative;
+        cursor: pointer;
+        color: inherit;
+
+        &.icon {
+            vertical-align: -7px;
+            padding-top: 17px;
+        }
+
+        .tb-box-icon {
+            font-size: 1.8rem;  
+        }
+
+        .badge {
+            position: absolute;
+            top: 9px;
+            right: 3px;
+            padding: 2px 6px 4px;
+            @include FontLight();
+            background: #df2e34;
+            @include borderRadius(50%);
+        }
+
+        .user-name {
+            display: inline-block;
+            padding: 0 10px 0 0;
+            
+            .icon {
+                margin-left: 5px;
+            }
+        }
+
+        .user-image {
+            display: inline-block;
+        }
+    }
+}
+
+
+
+// Dropdown
+.dropdown {
+
+    .dropdown-menu {
+        color: $df-font-color;
+        font-size: 1em;
+        font-weight: normal;
+        text-shadow: 0 0 0 #000;
+        text-align: left;
+        left: auto;
+        margin-top: -1px;
+        margin-right: -1px;
+        padding: 10px;
+        left: auto;
+        right: 0;
+        @include borderRadius(0);
+
+        .dropdown-menu-list {
+            margin-bottom: 10px;
+
+            li {
+                width: 100%;
+                margin: 0;
+                border-bottom: 1px solid #d0d0d0;
+                @extend .effect;
+
+                &:hover {
+                    background: #f6f6f6;
+                    padding: 0 0 0 5px;
+                    @extend .effect;
+                }
+
+                &:active {
+                    background: #eee;
+                }
+
+                a {
+                    background-color: transparent;
+                    color: #717171;
+                    width: 100%;
+                    margin: 0;
+                    padding: 10px 0;
+                }
+
+                .icon {
+                    color: #4d4d4d;
+                    float: right;
+                }
+            }
+        }
+
+        .loguot {
+            float: right;
+        }
+    }
+}
+
+.dropdown.open {
+    background: #5b5b5b;
+}
+
+// Logo
+.logo {
+    display: inline-block;
+    vertical-align: middle;
+    height: 30px;
+    max-height: 30px;
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+
+    .logo-img {
+        width: 30px;
+        display: inline-block;
+    }
+
+    .logo-title {
+        display: inline-block;
+        padding: 0 0 0 8px;
+        vertical-align: -2px;
+        max-height: 30px;
+        white-space: pre;
+    }
+
+    &.logo-footer {
+        color: #333;
+    }
+}
+
+// Menu
+.menu-icon {
+    background: url('../img/menu.png') center center;
+    width: 35px;
+    height: 30px;
+    float: right;
+    cursor: pointer;
+    margin-top: 0px;
+    margin-right: 5px;
+
+    &:hover {
+        background-color: #222;
+    }
+}
+
+.menu {
+    width: 200px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 50;
+    vertical-align: top;
+    @include Translate(-200px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    backface-visibility: hidden;
+    background: $menu-bg;
+    border-right: 1px solid $df-border-color;
+}
+
+.menu-item {
+    padding: 15px 10px;
+    border-bottom: 1px solid #d0d0d0;
+    color: #4d4d4d;
+    @include gradientToBottom(#ececec, #fff);
+    @extend .effect;
+    cursor: pointer;
+    text-shadow: 0 1px 1px #fff;
+    text-transform: uppercase;
+
+    &:hover {
+        @include gradientToBottom(#e0e0e0, #fff);  
+    }
+
+    &:active {
+        background: #dadada;
+    }
+
+    .icon {
+        float: right;
+        margin-top: 3px;
+    }
+}
+
+.menu-item-dropdown {
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu-dropdown {
+        display: none;
+        margin-bottom: 0;
+
+        .item {
+            padding: 15px 10px;
+            margin-bottom: 1px;
+            display: block;
+            border-bottom: 1px solid #656565;
+            @include boxShadow(0, 1px, 0, #888);
+            color: #fff;
+            text-shadow: 0 1px 1px #000;
+            background: #777;
+
+            &:hover {
+                padding-left: 20px;
+                background: #555;
+            }
+        }
+
+        &.open {
+            display: block;
+        }
+    }
+}
+
+// Breadcrumb
+.breadcrumb {
+    display: none;
+}
+
+// Panels
+.panel {
+
+    .panel-heading {
+        @include gradientToBottom(#ececec, #fff);
+
+        .panel-title {
+            font-size: 1em;
+            text-shadow: 0 1px 1px #fff;
+        }
+    }
+}
+
+// Dividers
+.divider {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    clear: both;
+}
+
+.divider-single {
+    background-color: #e0dede;
+    height: 1px;
+}
+
+// Fotter
+.footer-main {
+    text-align: center;
+
+    .logo-wrapper {
+        padding: 10px 0 0;
+
+        .logo {
+            height: auto;
+            max-height: none;
+            display: inline-block;
+
+            .info {
+                display: inline-block;
+            }
+
+            .logo-title {
+                display: block;
+                @include FontBold();
+            }
+
+            .copyright {
+                display: block;
+            }
+
+            .logo-img {
+                float: right;
+                margin: 2px 0 0 8px;
+            }
+        }
+
+    }
+}
+
+
+/* === Structure =============================================================================== */
+.login-page {
+    background: #f5f5f5;
+
+    .content-box-center {
+        min-width: 320px;
+        max-width: 400px;
+        margin: auto;
+        margin-top: 200px;
+    }
+
+    .panel {
+        -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow:    0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+        box-shadow:         0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-logo {
+        margin: 30px 0;
+        text-align: center;
+        font-size: 3.5em;
+        text-transform: none;
+    }
+
+    .checkbox {
+        margin-top: 0;
+        margin-bottom: 0px; 
+    }
+
+    .forgot-pass {
+        font-size: 0.7em;
+        text-transform: uppercase;
+    }
+
+    .panel-btn {
+        float: right;
+    }
+}
+
+
+/* === Media Queries =================================================================== */
+@media (min-width: $bp-sm-min) {
+
+    // Page
+    .page {
+        width: 100%;
+        @include Translate(0);
+        display: table;
+
+        &.menu-open {
+            @include Translate(0);
+        }
+    }
+
+    // Content
+    .content {
+        display: table-cell;
+    }
+
+    // Menu
+    .menu {
+        @include Translate(0);
+        display: table-cell;
+        position: relative;
+    }
+
+    // Navbar
+    .top-bar {
+
+        .top-bar-brand {
+            width: auto;
+            float: left;
+            padding-left: 5px;
+            margin-top: 2px;
+            padding: 5px 0 1px;
+        }
+
+        .top-bar-nav {
+            background: transparent;
+        }
+
+        .top-bar-item {   
+            border-left: 1px solid #2d2d2d;
+            @include boxShadow(-1px, 0, 0, #424242);
+        }
+
+    }
+
+    // Menu
+    .menu-icon {
+        display: none;
+    }
+
+    // Breadcrumb
+    .breadcrumb {
+        display: block;
+        text-align: right;
+        background-color: transparent;
+    }
+
+    // Fotter
+    .footer-main {
+        text-align: left;
+
+        .logo-wrapper {
+            text-align: right;
+            padding: 0 15px 0 0;
+
+            .logo {
+
+                .info {
+                }
+
+                .logo-title {
+                }
+
+                .copyright {
+                }
+
+                .logo-img {
+                }
+            }
+        }
+    }
+
+}
+
+.content {
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+.content {
+background: blue;
+}
+}

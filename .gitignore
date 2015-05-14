@@ -1,8 +1,11 @@
 Locadora/build/
 
+### CSS ###
+cache-style.css.map
+cache-style.css
+
 ### NetBeans ###
 nbproject/private/
-build/
 nbbuild/
 dist/
 nbdist/

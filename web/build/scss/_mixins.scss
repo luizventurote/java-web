@@ -1,0 +1,52 @@
+// === Mixins ================================================================================== //
+// Border Radius
+@mixin borderRadius($radius: 5px) {
+	-webkit-border-radius:  $radius;
+	-moz-border-radius: 	$radius;
+	border-radius: 			$radius;
+}
+
+// Box Shadow
+@mixin boxShadow($x:5px , $y:5px, $blur:5px, $color:#000) {
+	-webkit-box-shadow: $x $y $blur $color;
+	-moz-box-shadow:    $x $y $blur $color;
+	box-shadow:         $x $y $blur $color;
+}
+
+// Transition Effect
+@mixin transitionEffect($time:0.25s){
+	-webkit-transition: all $time ease-in-out;
+	-moz-transition: 	all $time ease-in-out;
+	-o-transition: 		all $time ease-in-out;
+	-ms-transition: 	all $time ease-in-out;
+	transition: 		all $time ease-in-out;
+}
+
+// Opacity
+@mixin Opacity($value: 0.5){
+    $aux_value: $value * 100;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=$aux_value);
+    -moz-opacity:$value;
+    -khtml-opacity: $value;
+    opacity: $value;
+}
+
+// transforns
+@mixin translateY($value: 0%) {
+    -webkit-transform: translateY($value);
+    -moz-transform: translateY($value);
+    -o-transform: translateY($value);
+    -ms-transform: translateY($value);
+    transform: translateY($value);
+}
+
+// Effects
+.effect {
+    @include transitionEffect();
+}
+
+// Transparent 
+.transparent {
+    @include Opacity(0.8);  
+}

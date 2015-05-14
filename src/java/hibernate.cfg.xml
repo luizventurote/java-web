@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db_locadora</property>
+    <property name="hibernate.connection.username">root</property>
+    
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">false</property>
+    <property name="hbm2ddl.auto">update</property>
+    
+
+    <mapping class="Model.Cliente" />
+    <mapping class="Model.Socio" />
+    <mapping class="Model.Dependente" />
+    <mapping class="Model.Ator" />
+    <mapping class="Model.Titulo" />
+    <mapping class="Model.Diretor" />
+    <mapping class="Model.Classe" />
+    <mapping class="Model.Distribuidor" />
+    <mapping class="Model.Categoria" />
+    <mapping class="Model.TipoItem" />
+    <mapping class="Model.Item" />
+    <mapping class="Model.Locacao" />
+    <mapping class="Model.Pagamento" />
+    
+    
+  </session-factory>
+</hibernate-configuration>

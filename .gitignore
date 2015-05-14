@@ -1,14 +1,16 @@
-Locadora/build/
+
 
 ### CSS ###
 cache-style.css.map
 cache-style.css
 
 ### NetBeans ###
-nbproject/private/
+/build/
+/nbproject/
 nbbuild/
 dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
+/build.xml

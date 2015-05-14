@@ -4,6 +4,7 @@ import static Application.Apl_Default.RESULT_ERRO;
 import static Application.Apl_Default.RESULT_OK;
 import static Application.Apl_Default.getRegistro;
 import static Application.Apl_Default.openSession;
+
 import Model.Ator;
 import java.sql.SQLException;
 import org.hibernate.HibernateException;
@@ -14,8 +15,14 @@ import org.hibernate.Session;
  */
 public class Apl_Ator extends Apl_Default {
     
+    /**
+    * Class main name base
+    */
     private static String classMainName = "Ator";
 
+    /**
+    * Constructor
+    */
     public Apl_Ator() {
         this.setMainName(classMainName);
     }
@@ -44,7 +51,7 @@ public class Apl_Ator extends Apl_Default {
         Ator obj = (Ator) getRegistro(tabela, id);
         
         // Open Session
-        Session session = openSession();;
+        Session session = openSession();
 
         try {
 
@@ -74,7 +81,7 @@ public class Apl_Ator extends Apl_Default {
         String form =   "<tr>"+
                             "<th scope='row'>" + o.getId() + "</th>" + 
                             "<td>" + o.getNome() + "</td>"+
-                            "<td><a href='#'>View</a> | <a href='Form.jsp?list_type="+classMainName+"&acao=con&id="+o.getId()+"'>Edit</a> | <a href='"+classMainName+"?acao=del&id="+o.getId()+"'>Delete</a></td>"+
+                            "<td>"+Apl_Diretor.getFormActions(classMainName, o.getId())+"</td>"+
                         "</tr>";
         
         return form;

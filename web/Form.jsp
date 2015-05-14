@@ -26,6 +26,9 @@
     // Form
     String mainForm = "";
     
+    // Submit button name
+    String submitName = "Cadastrar";
+    
     // Variável que informa que a requisição é de consulta
     boolean con = false;
     
@@ -38,6 +41,9 @@
             
             // Habilita a consulta
             con = true;
+            
+            // Change submit button name
+            submitName = "Salvar";
             
             // Get object ID
             int obj_id = Integer.parseInt(request.getParameter("id"));
@@ -88,7 +94,7 @@
                 <input type="hidden" name="acao" value="cad">
                 
                 <a href="<% out.println( list_type ); %>" class="btn btn-default">Voltar</a>
-                <button type="submit" class="btn btn-primary fl-right">Cadastrar</button>
+                <button type="submit" class="btn btn-primary fl-right"><% out.print(submitName); %></button>
             </form> 
 
         </div>

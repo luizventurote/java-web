@@ -123,6 +123,20 @@ public class Apl_Default {
 
     }
     
+    /**
+     * Get Form Actions - Edit and Delete links
+     */
+    public static String getFormActions(String table, int obj_id) {
+        return "<a href='Form.jsp?list_type="+table+"&acao=con&id="+obj_id+"'>Edit</a> | <a href='"+table+"?acao=del&id="+obj_id+"'>Delete</a>";
+    }
+    
+    /**
+     * Get Form Actions - Edit and Delete links
+     */
+    public static String getFormActions(String table, long obj_id) {
+        return "<a href='Form.jsp?list_type="+table+"&acao=con&id="+obj_id+"'>Edit</a> | <a href='"+table+"?acao=del&id="+obj_id+"'>Delete</a>";
+    }
+    
     public String getMainName() {
         return mainName;
     }

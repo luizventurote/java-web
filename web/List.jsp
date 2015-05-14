@@ -71,9 +71,9 @@
     
                 if( error != null) {
                     if(error.equals("0")) {
-                        out.println("Ação realizada com sucesso!");
+                        out.println("<div class='alert alert-success'>Ação realizada com sucesso!</div>");
                     } else {
-                        out.println("Erro!");
+                        out.println("<div class='alert alert-danger'>Erro!</div>");
                     }
                 }
                 

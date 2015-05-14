@@ -1,11 +1,8 @@
 package Controller;
 
-import Application.Apl_Ator;
 import Application.Apl_Default;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +28,7 @@ public class Servlet_Ator extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        String url = "List.jsp?list_type=Ator";
+        String url = "List.jsp?list_type="+tabela;
         
         // Verifica a ação do usuário informada na URL
         String acao = request.getParameter("acao");
@@ -39,12 +36,15 @@ public class Servlet_Ator extends HttpServlet {
             
             // Cadastrar
             if(acao.equals("cad")){
+                
                 String nome = request.getParameter("nome");
-                if(Application.Apl_Ator.incluir(nome) == Application.Apl_Ator.RESULT_OK){
+                
+                if(Application.Apl_Ator.incluir(nome) == Application.Apl_Default.RESULT_OK){
                     url = url + "&erro=0";
                 } else {
                     url = url + "&erro=1";
                 }
+                
             }
             
             // Deletar
@@ -53,21 +53,19 @@ public class Servlet_Ator extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 
                 try {
-                    if(Application.Apl_Ator.deletar(tabela, id) == Application.Apl_Ator.RESULT_OK){
+                    if(Application.Apl_Ator.deletar(tabela, id) == Application.Apl_Default.RESULT_OK){
                         url = url + "&erro=0";
                     } else {
                         url = url + "&erro=1";
                     }
-                } catch (Exception ex) {
-                    Logger.getLogger(Servlet_Ator.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                } catch (Exception ex) {}
+                
             }
             
         }
         
         response.sendRedirect(url);
-		
-        //request.getRequestDispatcher(url).forward(request,response); 
+        
     }
     
     
@@ -76,7 +74,7 @@ public class Servlet_Ator extends HttpServlet {
      * @return List Lista de registros
      */
     public static List consultarTodosRegistros() {
-        return Apl_Default.consultarTodosRegistros("Ator");
+        return Apl_Default.consultarTodosRegistros(tabela);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

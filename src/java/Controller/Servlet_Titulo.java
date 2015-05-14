@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Servlet_Titulo", urlPatterns = {"/Titulo"})
 public class Servlet_Titulo extends HttpServlet {
+    
+    private static String tabela = "Titulo";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,12 +38,15 @@ public class Servlet_Titulo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String url = "List.jsp?list_type="+tabela;
+        
+        // Verifica a ação do usuário informada na URL
         String acao = request.getParameter("acao");
-
         if (acao != null) {
-
-            if (acao.equals("cad")) {
-
+            
+            // Cadastrar
+            if(acao.equals("cad")){
+                
                 String nome = request.getParameter("nome");
                 String sinopse = request.getParameter("sinopse");
                 String diretor = request.getParameter("diretor");
@@ -52,22 +57,39 @@ public class Servlet_Titulo extends HttpServlet {
                 String atores[] = request.getParameterValues("atores");
                 Set<Ator> ator = new HashSet<Ator>();
                 
-                /**
-                 * Recupera registros
-                 */
+                //Recupera registros
                 ator = Apl_Default.getRegistros("Ator", atores);
                 Diretor dir = (Diretor) Apl_Default.getRegistro("Diretor", Integer.parseInt( diretor ));
                 Classe cla = (Classe) Apl_Default.getRegistro("Classe", Integer.parseInt( classe ));
                 Distribuidor dis = (Distribuidor) Apl_Default.getRegistro("Distribuidor", Integer.parseInt( distribuidor ));
                 Categoria cat = (Categoria) Apl_Default.getRegistro("Categoria", Integer.parseInt( categoria ));
-
-                if (Application.Apl_Titulo.incluir(nome, ano, sinopse, ator, cla, cat, dir, dis) == Application.Apl_Titulo.RESULT_OK);
-
+                
+                if(Application.Apl_Titulo.incluir(nome, ano, sinopse, ator, cla, cat, dir, dis) == Application.Apl_Default.RESULT_OK){
+                    url = url + "&erro=0";
+                } else {
+                    url = url + "&erro=1";
+                }
+                
+            }
+            
+            // Deletar
+            if(acao.equals("del")){
+                
+                int id = Integer.parseInt(request.getParameter("id"));
+                
+                try {
+                    if(Application.Apl_Titulo.deletar(tabela, id) == Application.Apl_Default.RESULT_OK){
+                        url = url + "&erro=0";
+                    } else {
+                        url = url + "&erro=1";
+                    }
+                } catch (Exception ex) {}
+                
             }
 
         }
         
-        request.getRequestDispatcher("ListTitulo.jsp").forward(request,response);
+        response.sendRedirect(url);
         
     }
     
@@ -76,7 +98,7 @@ public class Servlet_Titulo extends HttpServlet {
      * @return List Lista de registros
      */
     public static List consultarTodosRegistros() {
-        return Apl_Default.consultarTodosRegistros("Titulo");
+        return Apl_Default.consultarTodosRegistros(tabela);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

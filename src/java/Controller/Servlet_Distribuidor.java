@@ -30,50 +30,65 @@ public class Servlet_Distribuidor extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       
-        String acao = request.getParameter("acao");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        String url = "List.jsp?list_type="+tabela;
+       
+        // Verifica a ação do usuário informada na URL
+        String acao = request.getParameter("acao");        
         if(acao != null ) {
             
+            // Cadastrar
             if(acao.equals("cad")){
+                
                 int cnpj     = Integer.parseInt(request.getParameter("cnpj"));
                 String razao = request.getParameter("razao");
-                if(Application.Apl_Distribuidor.incluir(cnpj, razao) == Application.Apl_Distribuidor.RESULT_OK){}
+                
+                if(Application.Apl_Distribuidor.incluir(cnpj, razao) == Application.Apl_Default.RESULT_OK){
+                    url = url + "&erro=0";
+                } else {
+                    url = url + "&erro=1";
+                }
+                
             }
             
+            // Update
             if(acao.equals("upd")){
                 
-                int id = Integer.parseInt(request.getParameter("id"));
+                // Object data
+                int id      = Integer.parseInt(request.getParameter("id"));
                 int cnpj     = Integer.parseInt(request.getParameter("cnpj"));
                 String razao = request.getParameter("razao");
                 
+                // Main Object
                 Distribuidor obj = (Distribuidor) Apl_Default.getRegistro(tabela, id);
                 
+                // Set object values
                 obj.setRazaoSocial(razao);
                 
                 try {
-                    if(Application.Apl_Distribuidor.update(obj) == Application.Apl_Distribuidor.RESULT_OK){}
-                } catch (Exception ex) {
-                    Logger.getLogger(Servlet_Distribuidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    if(Application.Apl_Distribuidor.update(obj) == Application.Apl_Default.RESULT_OK){}
+                } catch (Exception ex) {}
                 
             }
             
+            // Deletar
             if(acao.equals("del")){
+                
                 int id = Integer.parseInt(request.getParameter("id"));
                 
                 try {
-                    if(Application.Apl_Distribuidor.deletar(tabela, id) == Application.Apl_Distribuidor.RESULT_OK){}
-                } catch (Exception ex) {
-                    Logger.getLogger(Servlet_Distribuidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    if(Application.Apl_Distribuidor.deletar(tabela, id) == Application.Apl_Distribuidor.RESULT_OK){
+                        url = url + "&erro=0";
+                    } else {
+                        url = url + "&erro=1";
+                    }
+                } catch (Exception ex) {}
+                
             }
-            
         }
 		
-        request.getRequestDispatcher("ListDistribuidor.jsp").forward(request,response); 
+        response.sendRedirect(url);
         
     }
     

@@ -109,6 +109,22 @@ public class Apl_Ator extends Apl_Default {
     /**
     * Retorna a linha de exibição do list
     */
+    public static String getFormListHeader() {
+        
+        String form =   "<tr>"+
+                            "<th>id</th>\n" +
+                            "<th>Nome</th>\n" +
+                            "<th>Ações</th>"+
+                        "</tr>";
+        
+        return form;
+        
+    }
+    
+    
+    /**
+    * Retorna a linha de exibição do list
+    */
     public static String getFormList(Object obj) {
         
         Ator o = (Ator) obj;
@@ -125,34 +141,18 @@ public class Apl_Ator extends Apl_Default {
     
     
     /**
-    * Retorna a linha de exibição do list
-    */
-    public static String getFormListHeader() {
-        
-        String form =   "<tr>"+
-                            "<th>id</th>\n" +
-                            "<th>Nome</th>\n" +
-                            "<th>Ações</th>"+
-                        "</tr>";
-        
-        return form;
-        
-    }
-    
-    
-    /**
     * Retorna O formulário da classe
     */
     public static String getForm() {
         
         // Form
-        String form;
+        String form = "";
         
         // Form builder
         FormBuild buildForm = new FormBuild();
         
         // Name
-        form = buildForm.getInputText("Nome", "nome");
+        form = form + buildForm.getInputText("Nome", "nome");
             
         return form;
         
@@ -168,13 +168,13 @@ public class Apl_Ator extends Apl_Default {
         Ator o = (Ator) Apl_Default.getRegistro(classMainName, id);
         
         // Form
-        String form;
+        String form = "";
         
         // Form builder
         FormBuild buildForm = new FormBuild();
         
         // Name
-        form = buildForm.getInputText("Nome", "nome", o.getNome());
+        form = form + buildForm.getInputText("Nome", "nome", o.getNome());
             
         return form;
         

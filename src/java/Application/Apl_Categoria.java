@@ -145,7 +145,7 @@ public class Apl_Categoria extends Apl_Default {
     public static String getForm() {
         
         // Form
-        String form;
+        String form = "";
         
         // Form builder
         FormBuild buildForm = new FormBuild();
@@ -167,7 +167,7 @@ public class Apl_Categoria extends Apl_Default {
         Categoria o = (Categoria) Apl_Default.getRegistro(classMainName, id);
         
         // Form
-        String form;
+        String form = "";
         
         // Form builder
         FormBuild buildForm = new FormBuild();

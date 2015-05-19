@@ -5,6 +5,7 @@ import static Application.Apl_Default.RESULT_OK;
 import static Application.Apl_Default.getRegistro;
 import static Application.Apl_Default.openSession;
 
+import Util.FormBuild;
 import Model.Classe;
 import java.sql.SQLException;
 import org.hibernate.HibernateException;
@@ -15,17 +16,20 @@ import org.hibernate.Session;
  */
 public class Apl_Classe extends Apl_Default {
     
+    
     /**
     * Class main name base
     */
     private static String classMainName = "Classe";
 
+    
     /**
     * Constructor
     */
     public Apl_Classe() {
         this.setMainName(classMainName);
     }
+    
     
     /**
     * Incluir
@@ -41,6 +45,35 @@ public class Apl_Classe extends Apl_Default {
 		
         return RESULT_OK;
     }
+    
+    
+    /**
+     * Atualizar
+     */
+    public static int update(Classe obj) throws Exception, SQLException, HibernateException {
+        
+        // Open Session
+        Session session = openSession();
+
+        try {
+
+            session.beginTransaction();
+            session.update(obj);
+            session.getTransaction().commit();
+
+        } catch (HibernateException he) {
+            session.getTransaction().rollback();
+            return RESULT_ERRO;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        
+        return RESULT_OK;
+        
+    }
+    
     
     /**
      * Deletar
@@ -71,24 +104,6 @@ public class Apl_Classe extends Apl_Default {
         return RESULT_OK;
     }
     
-    /**
-    * Retorna a linha de exibição do list
-    */
-    public static String getFormList(Object obj) {
-        
-        Classe o = (Classe) obj;
-        
-        String form =   "<tr>"+
-                            "<th scope='row'>" + o.getId() + "</th>" + 
-                            "<td>" + o.getNome() + "</td>"+
-                            "<td>" + o.getValor()+ "</td>"+
-                            "<td>" + o.getPrazoDevolucao()+ "</td>"+
-                            "<td>"+Apl_Diretor.getFormActions(classMainName, o.getId())+"</td>"+
-                        "</tr>";
-        
-        return form;
-        
-    }
     
     /**
     * Retorna a linha de exibição do list
@@ -107,25 +122,46 @@ public class Apl_Classe extends Apl_Default {
         
     }
     
+    
+    /**
+    * Retorna a linha de exibição do list
+    */
+    public static String getFormList(Object obj) {
+        
+        Classe o = (Classe) obj;
+        
+        String form =   "<tr>"+
+                            "<th scope='row'>" + o.getId() + "</th>" + 
+                            "<td>" + o.getNome() + "</td>"+
+                            "<td>" + o.getValor()+ "</td>"+
+                            "<td>" + o.getPrazoDevolucao()+ "</td>"+
+                            "<td>"+Apl_Default.getFormActions(classMainName, o.getId())+"</td>"+
+                        "</tr>";
+        
+        return form;
+        
+    }
+    
+    
     /**
     * Retorna O formulário da classe
     */
     public static String getForm() {
         
-        String form = "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Nome</label>\n" +
-                        "<input type='text' class='form-control' name='nome'>\n" +
-                      "</div>\n"+
-                
-                      "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Valor de locação</label>\n" +
-                        "<input type='text' class='form-control' name='valor'>\n" +
-                      "</div>\n"+
-                
-                      "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Prazo de devolução (dias)</label>\n" +
-                        "<input type='text' class='form-control' name='prazo'>\n" +
-                      "</div>\n";
+        // Form
+        String form = "";
+        
+        // Form builder
+        FormBuild buildForm = new FormBuild();
+        
+        // Name
+        form = form + buildForm.getInputText("Nome", "nome");
+        
+        // Valor de locação
+        form = form + buildForm.getInputText("Valor de locação", "valor");
+        
+        // Prazo de devolução
+        form = form + buildForm.getInputText("Prazo de devolução (dias)", "prazo");
             
         return form;
         
@@ -136,23 +172,24 @@ public class Apl_Classe extends Apl_Default {
     */
     public static String getFormToUpdate(int id) {
         
+        // Main Object
         Classe o = (Classe) Apl_Default.getRegistro(classMainName, id);
         
-        String form = "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Nome</label>\n" +
-                        "<input type='text' class='form-control' name='nome' value='"+o.getNome()+"'>\n" +
-                      "</div>\n"+
-                
-                      "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Valor de locação</label>\n" +
-                        "<input type='text' class='form-control' name='valor' value='"+o.getValor()+"'>\n" +
-                      "</div>\n"+
-                
-                      "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Prazo de devolução (dias)</label>\n" +
-                        "<input type='text' class='form-control' name='prazo' value='"+o.getPrazoDevolucao()+"'>\n" +
-                      "</div>\n";
-            
+        // Form
+        String form = "";
+        
+        // Form builder
+        FormBuild buildForm = new FormBuild();
+        
+        // Name
+        form = form + buildForm.getInputText("Nome", "nome", o.getNome());
+        
+        // Valor de locação
+        form = form + buildForm.getInputText("Valor de locação", "valor", Double.toString( o.getValor() ));
+        
+        // Prazo de devolução
+        form = form + buildForm.getInputText("Prazo de devolução (dias)", "prazo", Integer.toString( o.getPrazoDevolucao() ));
+                        
         return form;
         
     }

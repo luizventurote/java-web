@@ -5,6 +5,7 @@ import static Application.Apl_Default.RESULT_OK;
 import static Application.Apl_Default.getRegistro;
 import static Application.Apl_Default.openSession;
 
+import Util.FormBuild;
 import Model.Ator;
 import java.sql.SQLException;
 import org.hibernate.HibernateException;
@@ -15,17 +16,20 @@ import org.hibernate.Session;
  */
 public class Apl_Ator extends Apl_Default {
     
+    
     /**
     * Class main name base
     */
     private static String classMainName = "Ator";
 
+    
     /**
     * Constructor
     */
     public Apl_Ator() {
         this.setMainName(classMainName);
     }
+    
     
     /**
     * Incluir
@@ -41,6 +45,36 @@ public class Apl_Ator extends Apl_Default {
                 
         return RESULT_OK;
     }
+    
+    
+    
+    /**
+     * Atualizar
+     */
+    public static int update(Ator obj) throws Exception, SQLException, HibernateException {
+        
+        // Open Session
+        Session session = openSession();
+
+        try {
+
+            session.beginTransaction();
+            session.update(obj);
+            session.getTransaction().commit();
+
+        } catch (HibernateException he) {
+            session.getTransaction().rollback();
+            return RESULT_ERRO;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        
+        return RESULT_OK;
+        
+    }
+    
     
     /**
      * Deletar
@@ -71,6 +105,23 @@ public class Apl_Ator extends Apl_Default {
         return RESULT_OK;
     }
     
+    
+    /**
+    * Retorna a linha de exibição do list
+    */
+    public static String getFormListHeader() {
+        
+        String form =   "<tr>"+
+                            "<th>id</th>\n" +
+                            "<th>Nome</th>\n" +
+                            "<th>Ações</th>"+
+                        "</tr>";
+        
+        return form;
+        
+    }
+    
+    
     /**
     * Retorna a linha de exibição do list
     */
@@ -88,46 +139,42 @@ public class Apl_Ator extends Apl_Default {
         
     }
     
-    /**
-    * Retorna a linha de exibição do list
-    */
-    public static String getFormListHeader() {
-        
-        String form =   "<tr>"+
-                            "<th>id</th>\n" +
-                            "<th>Nome</th>\n" +
-                            "<th>Ações</th>"+
-                        "</tr>";
-        
-        return form;
-        
-    }
     
     /**
     * Retorna O formulário da classe
     */
     public static String getForm() {
         
-        String form = "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Nome</label>\n" +
-                        "<input type='text' class='form-control' name='nome'>\n" +
-                      "</div>";
+        // Form
+        String form;
+        
+        // Form builder
+        FormBuild buildForm = new FormBuild();
+        
+        // Name
+        form = buildForm.getInputText("Nome", "nome");
             
         return form;
         
     }
+    
     
     /**
     * Retorna O formulário de atualização da classe com os dados do objeto
     */
     public static String getFormToUpdate(int id) {
         
+        // Main Object
         Ator o = (Ator) Apl_Default.getRegistro(classMainName, id);
         
-        String form = "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Nome</label>\n" +
-                        "<input type='text' class='form-control' name='nome' value='"+o.getNome()+"' >\n" +
-                      "</div>";
+        // Form
+        String form;
+        
+        // Form builder
+        FormBuild buildForm = new FormBuild();
+        
+        // Name
+        form = buildForm.getInputText("Nome", "nome", o.getNome());
             
         return form;
         

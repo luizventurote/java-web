@@ -1,6 +1,7 @@
 package Controller;
 
 import Application.Apl_Default;
+import Model.Ator;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -47,6 +48,25 @@ public class Servlet_Ator extends HttpServlet {
                 
             }
             
+            // Update
+            if(acao.equals("upd")){
+                
+                // Object data
+                int id      = Integer.parseInt(request.getParameter("id"));
+                String nome = request.getParameter("nome");
+                
+                // Main Object
+                Ator obj = (Ator) Apl_Default.getRegistro(tabela, id);
+                
+                // Set object values
+                obj.setNome(nome);
+                
+                try {
+                    if(Application.Apl_Ator.update(obj) == Application.Apl_Default.RESULT_OK){}
+                } catch (Exception ex) {}
+                
+            }
+            
             // Deletar
             if(acao.equals("del")){
                 
@@ -61,7 +81,6 @@ public class Servlet_Ator extends HttpServlet {
                 } catch (Exception ex) {}
                 
             }
-            
         }
         
         response.sendRedirect(url);

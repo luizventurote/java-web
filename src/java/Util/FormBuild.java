@@ -28,6 +28,18 @@ public class FormBuild {
     }
     
     /**
+    * Get input text with value
+    */
+    public String getInputText(String labelName, String inputName, String value) {
+        
+        this.form = "<label for='exampleInput'>"+labelName+"</label>\n" +
+                    "<input type='text' class='form-control' name='"+inputName+"' value='"+value+"'>\n";
+        
+        return this.formPrefix +this.form+this.formSufix;
+        
+    }
+    
+    /**
     * Get input text
     */
     public String getSelect(HashMap hash, String labelName, String selectName) {

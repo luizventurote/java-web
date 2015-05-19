@@ -30,23 +30,26 @@
     String submitName = "Cadastrar";
     
     // Variável que informa que a requisição é de consulta
-    boolean con = false;
+    boolean upd = false;
+    
+    // ID
+    int obj_id = -1;
     
     // Check the action
     String acao = request.getParameter("acao");
     if(acao != null ) {
         
         // Consultar
-        if( acao.equals("con") ) {
+        if( acao.equals("upd") ) {
             
             // Habilita a consulta
-            con = true;
+            upd = true;
             
             // Change submit button name
             submitName = "Salvar";
             
             // Get object ID
-            int obj_id = Integer.parseInt(request.getParameter("id"));
+            obj_id = Integer.parseInt(request.getParameter("id"));
             
             // Chama o form de update passando o ID
             mainForm = (String) objMainApplication_getFormToUpdate.invoke(null, obj_id);
@@ -87,13 +90,15 @@
 
         <div class="col-sm-6">
             
-            <form action="<% out.println( list_type ); %>" method="POST">
+            <form action="<% out.print( list_type ); %>" method="POST">
+                
+                <input type="hidden" name="id" value="<% if(upd) { out.print( obj_id ); } %>">
                 
                 <% out.println(mainForm); %>
                                                 
-                <input type="hidden" name="acao" value="cad">
+                <input type="hidden" name="acao" value="<% out.print( acao ); %>">
                 
-                <a href="<% out.println( list_type ); %>" class="btn btn-default">Voltar</a>
+                <a href="<% out.print( list_type ); %>" class="btn btn-default" tabindex="-1">Voltar</a>
                 <button type="submit" class="btn btn-primary fl-right"><% out.print(submitName); %></button>
             </form> 
 

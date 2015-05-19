@@ -109,12 +109,14 @@ public class Apl_Ator extends Apl_Default {
     /**
     * Retorna a linha de exibição do list
     */
-    public static String getFormListHeader() {
+    public static String getFormList(Object obj) {
+        
+        Ator o = (Ator) obj;
         
         String form =   "<tr>"+
-                            "<th>id</th>\n" +
-                            "<th>Nome</th>\n" +
-                            "<th>Ações</th>"+
+                            "<th scope='row'>" + o.getId() + "</th>" + 
+                            "<td>" + o.getNome() + "</td>"+
+                            "<td>"+Apl_Default.getFormActions(classMainName, o.getId())+"</td>"+
                         "</tr>";
         
         return form;
@@ -125,14 +127,12 @@ public class Apl_Ator extends Apl_Default {
     /**
     * Retorna a linha de exibição do list
     */
-    public static String getFormList(Object obj) {
-        
-        Ator o = (Ator) obj;
+    public static String getFormListHeader() {
         
         String form =   "<tr>"+
-                            "<th scope='row'>" + o.getId() + "</th>" + 
-                            "<td>" + o.getNome() + "</td>"+
-                            "<td>"+Apl_Diretor.getFormActions(classMainName, o.getId())+"</td>"+
+                            "<th>id</th>\n" +
+                            "<th>Nome</th>\n" +
+                            "<th>Ações</th>"+
                         "</tr>";
         
         return form;

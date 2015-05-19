@@ -1,6 +1,7 @@
 package Controller;
 
 import Application.Apl_Default;
+import Model.Categoria;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -45,6 +46,25 @@ public class Servlet_Categoria extends HttpServlet {
                 } else {
                     url = url + "&erro=1";
                 }
+                
+            }
+            
+            // Update
+            if(acao.equals("upd")){
+                
+                // Object data
+                int id      = Integer.parseInt(request.getParameter("id"));
+                String nome = request.getParameter("nome");
+                
+                // Main Object
+                Categoria obj = (Categoria) Apl_Default.getRegistro(tabela, id);
+                
+                // Set object values
+                obj.setNome(nome);
+                
+                try {
+                    if(Application.Apl_Categoria.update(obj) == Application.Apl_Default.RESULT_OK){}
+                } catch (Exception ex) {}
                 
             }
             

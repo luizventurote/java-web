@@ -6,6 +6,7 @@ import Model.Categoria;
 import Model.Classe;
 import Model.Diretor;
 import Model.Distribuidor;
+import Model.Titulo;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -69,6 +70,25 @@ public class Servlet_Titulo extends HttpServlet {
                 } else {
                     url = url + "&erro=1";
                 }
+                
+            }            
+            
+            // Update
+            if(acao.equals("upd")){
+                
+                // Object data
+                int id      = Integer.parseInt(request.getParameter("id"));
+                String nome = request.getParameter("nome");
+                
+                // Main Object
+                Titulo obj = (Titulo) Apl_Default.getRegistro(tabela, id);
+                
+                // Set object values
+                obj.setNome(nome);
+                
+                try {
+                    if(Application.Apl_Titulo.update(obj) == Application.Apl_Default.RESULT_OK){}
+                } catch (Exception ex) {}
                 
             }
             

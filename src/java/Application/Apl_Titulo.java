@@ -30,17 +30,20 @@ import org.hibernate.Session;
  */
 public class Apl_Titulo extends Apl_Default {
     
+    
     /**
     * Class main name base
     */
     private static String classMainName = "Titulo";
 
+    
     /**
     * Constructor
     */
     public Apl_Titulo() {
         this.setMainName(classMainName);
     }
+    
     
     /**
     * Incluir
@@ -57,6 +60,36 @@ public class Apl_Titulo extends Apl_Default {
 	
     	return RESULT_OK;
     }
+    
+    
+    
+    /**
+     * Atualizar
+     */
+    public static int update(Titulo obj) throws Exception, SQLException, HibernateException {
+        
+        // Open Session
+        Session session = openSession();
+
+        try {
+
+            session.beginTransaction();
+            session.update(obj);
+            session.getTransaction().commit();
+
+        } catch (HibernateException he) {
+            session.getTransaction().rollback();
+            return RESULT_ERRO;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        
+        return RESULT_OK;
+        
+    }
+    
     
     /**
      * Deletar
@@ -87,6 +120,7 @@ public class Apl_Titulo extends Apl_Default {
         return RESULT_OK;
     }
     
+    
     /**
     * Retorna um HashMap com os objetos em key = value
     */
@@ -111,6 +145,23 @@ public class Apl_Titulo extends Apl_Default {
         
     }
     
+    
+    /**
+    * Retorna a linha de exibição do list
+    */
+    public static String getFormListHeader() {
+        
+        String form =   "<tr>"+
+                            "<th>id</th>\n" +
+                            "<th>Nome</th>\n" +
+                            "<th>Ações</th>"+
+                        "</tr>";
+        
+        return form;
+        
+    }
+    
+    
     /**
     * Retorna a linha de exibição do list
     */
@@ -128,20 +179,6 @@ public class Apl_Titulo extends Apl_Default {
         
     }
     
-    /**
-    * Retorna a linha de exibição do list
-    */
-    public static String getFormListHeader() {
-        
-        String form =   "<tr>"+
-                            "<th>id</th>\n" +
-                            "<th>Nome</th>\n" +
-                            "<th>Ações</th>"+
-                        "</tr>";
-        
-        return form;
-        
-    }
     
     /**
     * Retorna O formulário da classe
@@ -149,7 +186,7 @@ public class Apl_Titulo extends Apl_Default {
     public static String getForm() {
         
         // Form
-        String form;
+        String form = "";
         
         // Form builder
         FormBuild buildForm = new FormBuild();
@@ -157,30 +194,28 @@ public class Apl_Titulo extends Apl_Default {
         // Registros
         List registros;
         
-        // Form Nome
-        form = buildForm.getInputText("Nome", "nome");
+        // Nome
+        form = form + buildForm.getInputText("Nome", "nome");
         
-        // Form Ano
+        // Ano
         form = form + buildForm.getInputText("Ano", "ano");
         
         
         // Select Categoria
-        form        = form +"<div class='form-group'>\n" +
+        form = form +"<div class='form-group'>\n" +
                         "<label for='exampleInput'>Categoria</label>\n" +
                         "<select class='form-control' name='categoria'>";
         
         registros = Servlet_Categoria.consultarTodosRegistros();
         Iterator<Categoria> cat = registros.iterator();
                             
-        while (cat.hasNext()){
-								
+        while (cat.hasNext()){			
             Categoria o = (Categoria)cat.next();
-                                
-            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
-									
+            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";								
         }
         
         form = form +"</select></div>";
+        
         
         
         // Select Classe
@@ -191,15 +226,13 @@ public class Apl_Titulo extends Apl_Default {
         registros = Servlet_Classe.consultarTodosRegistros();
         Iterator<Classe> cla = registros.iterator();
                             
-        while (cla.hasNext()){
-								
-            Classe o = (Classe)cla.next();
-                                
-            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
-									
+        while (cla.hasNext()){			
+            Classe o = (Classe)cla.next();                  
+            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";							
         }
         
         form = form +"</select></div>";
+        
         
         
         // Select Ator
@@ -210,15 +243,13 @@ public class Apl_Titulo extends Apl_Default {
         registros = Servlet_Ator.consultarTodosRegistros();
         Iterator<Ator> obj = registros.iterator();
                             
-        while (obj.hasNext()){
-								
+        while (obj.hasNext()){				
             Ator o = (Ator)obj.next();
-                                
-            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
-									
+            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";							
         }
         
         form = form +"</select></div>";
+        
         
         
         // Select Diretor
@@ -229,12 +260,9 @@ public class Apl_Titulo extends Apl_Default {
         registros = Servlet_Diretor.consultarTodosRegistros();
         Iterator<Diretor> dir = registros.iterator();
                             
-        while (dir.hasNext()){
-								
+        while (dir.hasNext()){				
             Diretor o = (Diretor)dir.next();
-            
-            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
-									
+            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";						
         }
         
         form = form + "</select></div>";
@@ -248,18 +276,16 @@ public class Apl_Titulo extends Apl_Default {
         
         
         // Select Distribuidor
-        form        = form +"<div class='form-group'>\n" +
+        form = form +"<div class='form-group'>\n" +
                         "<label for='exampleInput'>Distribuidor</label>\n" +
                         "<select class='form-control' name='distribuidor'>";
         
         registros = Servlet_Distribuidor.consultarTodosRegistros();
         Iterator<Distribuidor> dis = registros.iterator();
                             
-        while (dis.hasNext()){
-								
+        while (dis.hasNext()){					
             Distribuidor o = (Distribuidor)dis.next();
-            form = form + "<option value='"+o.getCnpj()+"'>"+o.getRazaoSocial()+"</option>";
-									
+            form = form + "<option value='"+o.getCnpj()+"'>"+o.getRazaoSocial()+"</option>";							
         }
         
         form = form + "</select></div>";
@@ -269,17 +295,151 @@ public class Apl_Titulo extends Apl_Default {
         
     }
     
+    
     /**
     * Retorna O formulário de atualização da classe com os dados do objeto
     */
     public static String getFormToUpdate(int id) {
         
-        Classe o = (Classe) Apl_Default.getRegistro(classMainName, id);
+        // Main object
+        Titulo obj = (Titulo) Apl_Default.getRegistro(classMainName, id);
         
-        String form = "<div class='form-group'>\n" +
-                        "<label for='exampleInput'>Nome</label>\n" +
-                        "<input type='text' class='form-control' name='nome' value='"+o.getNome()+"' >\n" +
+        // Form
+        String form = "";
+        
+        // Form builder
+        FormBuild buildForm = new FormBuild();
+        
+        // Registros
+        List registros;
+        
+        // Nome
+        form = form + buildForm.getInputText("Nome", "nome", obj.getNome());
+        
+        // Ano
+        form = form + buildForm.getInputText("Ano", "ano", obj.getAno());
+        
+        // Select Categoria
+        form = form +"<div class='form-group'>\n" +
+                        "<label for='exampleInput'>Categoria</label>\n" +
+                        "<select class='form-control' name='categoria'>";
+        
+        registros = Servlet_Categoria.consultarTodosRegistros();
+        Iterator<Categoria> cat = registros.iterator();
+                            
+        while (cat.hasNext()){			
+            Categoria o = (Categoria)cat.next();
+            
+            if(obj.getCategoria().getId() == o.getId()) {
+                form = form + "<option value='"+o.getId()+"' selected>"+o.getNome()+"</option>";
+            } else {
+                form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
+            }
+            								
+        }
+        
+        form = form +"</select></div>";
+               
+        // Select Classe
+        form = form +"<div class='form-group'>\n" +
+                        "<label for='exampleInput'>Classe</label>\n" +
+                        "<select class='form-control' name='classe'>";
+        
+        registros = Servlet_Classe.consultarTodosRegistros();
+        Iterator<Classe> cla = registros.iterator();
+                            
+        while (cla.hasNext()){			
+            Classe o = (Classe)cla.next();   
+            
+            if(obj.getClasse().getId() == o.getId()) {
+                form = form + "<option value='"+o.getId()+"' selected>"+o.getNome()+"</option>";
+            } else {
+                form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
+            }	
+        }
+        
+        form = form +"</select></div>";
+                
+        // Select Ator
+        form = form +"<div class='form-group'>\n" +
+                        "<label for='exampleInput'>Atores</label>\n" +
+                        "<select multiple class='form-control' name='atores'>";
+        
+        registros = Servlet_Ator.consultarTodosRegistros();
+        Iterator<Ator> at = registros.iterator();
+        
+        
+        
+                            
+        while (at.hasNext()){				
+            Ator o = (Ator)at.next();
+            
+           /* 
+            Iterator<Ator> sub_at = obj.getAtores().iterator();
+            
+            while(sub_at.hasNext()) {
+                
+                Ator sub_o = (Ator) sub_at.next();
+                
+                if(sub_o.getId() == o.getId()) {
+                    form = form + "<option value='"+o.getId()+"' selected>"+o.getNome()+"</option>";
+                } else {
+                    form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
+                }
+                
+            }
+           
+                */
+                
+                
+     
+            
+            
+            							
+        }
+        
+        form = form +"</select></div>";
+        
+        
+        
+        // Select Diretor
+        form        = form +"<div class='form-group'>\n" +
+                        "<label for='exampleInput'>Diretor</label>\n" +
+                        "<select class='form-control' name='diretor'>";
+        
+        registros = Servlet_Diretor.consultarTodosRegistros();
+        Iterator<Diretor> dir = registros.iterator();
+                            
+        while (dir.hasNext()){				
+            Diretor o = (Diretor)dir.next();
+            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";						
+        }
+        
+        form = form + "</select></div>";
+        
+        
+        // Sinopse
+        form = form + "<div class='form-group'>\n" +
+                        "<label for='exampleInput'>Sinopse</label>\n" +
+                        "<textarea class='form-control' rows='3' name='sinopse'></textarea>\n" +
                       "</div>";
+        
+        
+        // Select Distribuidor
+        form = form +"<div class='form-group'>\n" +
+                        "<label for='exampleInput'>Distribuidor</label>\n" +
+                        "<select class='form-control' name='distribuidor'>";
+        
+        registros = Servlet_Distribuidor.consultarTodosRegistros();
+        Iterator<Distribuidor> dis = registros.iterator();
+                            
+        while (dis.hasNext()){					
+            Distribuidor o = (Distribuidor)dis.next();
+            form = form + "<option value='"+o.getCnpj()+"'>"+o.getRazaoSocial()+"</option>";							
+        }
+        
+        form = form + "</select></div>";
+        
             
         return form;
         

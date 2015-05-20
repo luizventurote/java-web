@@ -15,7 +15,7 @@ public class Apl_Distribuidor extends Apl_Default {
     /**
     * Class main name base
     */
-    private static String classMainName = "Classe";
+    private static String classMainName = "Distribuidor";
 
     
     /**

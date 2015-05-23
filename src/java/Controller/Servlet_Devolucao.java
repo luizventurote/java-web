@@ -1,6 +1,11 @@
 package Controller;
 
+import Application.Apl_Default;
+import Model.Cliente;
+import Model.Devolucao;
+import Model.Titulo;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Servlet_Devolucao", urlPatterns = {"/Devolucao"})
 public class Servlet_Devolucao extends HttpServlet {
+    
+    private static String tabela = "Devolucao";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -25,8 +32,83 @@ public class Servlet_Devolucao extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/ListDevolucao.jsp");
-        rd.forward(request,response);        
+        
+        String url = "List.jsp?list_type="+tabela;
+        
+        // Verifica a ação do usuário informada na URL
+        String acao = request.getParameter("acao");
+        if (acao != null) {
+            
+            // Cadastrar
+            if(acao.equals("cad")){
+                
+                String cliente  = request.getParameter("cliente");
+                String titulo   = request.getParameter("titulo");
+                
+                //Recupera registros
+                Cliente cli = (Cliente) Apl_Default.getRegistro("Cliente", Integer.parseInt( cliente ));
+                Titulo tit  = (Titulo) Apl_Default.getRegistro("Titulo", Integer.parseInt( titulo ));
+                
+                if(Application.Apl_Devolucao.incluir(cli, tit) == Application.Apl_Default.RESULT_OK){
+                    url = url + "&erro=0";
+                } else {
+                    url = url + "&erro=1";
+                }
+                
+            }            
+            
+            // Update
+            if(acao.equals("upd")){
+                
+                // Object data
+                int id          = Integer.parseInt(request.getParameter("id"));
+                String cliente  = request.getParameter("cliente");
+                String titulo   = request.getParameter("titulo");
+                
+                //Recupera registros
+                Cliente cli = (Cliente) Apl_Default.getRegistro("Cliente", Integer.parseInt( cliente ));
+                Titulo tit  = (Titulo) Apl_Default.getRegistro("Titulo", Integer.parseInt( titulo ));
+                
+                // Main Object
+                Devolucao obj = (Devolucao) Apl_Default.getRegistro(tabela, id);
+                
+                // Set object values
+                obj.setCliente(cli);
+                obj.setTitulo(tit);
+                
+                try {
+                    if(Application.Apl_Devolucao.update(obj) == Application.Apl_Default.RESULT_OK){}
+                } catch (Exception ex) {}
+                
+            }
+            
+            // Deletar
+            if(acao.equals("del")){
+                
+                int id = Integer.parseInt(request.getParameter("id"));
+                
+                try {
+                    if(Application.Apl_Devolucao.deletar(tabela, id) == Application.Apl_Default.RESULT_OK){
+                        url = url + "&erro=0";
+                    } else {
+                        url = url + "&erro=1";
+                    }
+                } catch (Exception ex) {}
+                
+            }
+
+        }
+        
+        response.sendRedirect(url);
+        
+    }
+    
+    /**
+     * Recupera todos os registros do banco de dados relacionados a tabela do servlet.
+     * @return List Lista de registros
+     */
+    public static List consultarTodosRegistros() {
+        return Apl_Default.consultarTodosRegistros(tabela);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

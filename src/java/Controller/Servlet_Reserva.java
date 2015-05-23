@@ -1,19 +1,11 @@
 package Controller;
 
 import Application.Apl_Default;
-import Model.Ator;
-import Model.Categoria;
-import Model.Classe;
 import Model.Cliente;
-import Model.Diretor;
-import Model.Distribuidor;
 import Model.Reserva;
 import Model.Titulo;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

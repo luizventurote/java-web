@@ -26,6 +26,7 @@
     <mapping class="Model.Locacao" />
     <mapping class="Model.Pagamento" />
     <mapping class="Model.Reserva" />
+    <mapping class="Model.Devolucao" />
     
     
   </session-factory>

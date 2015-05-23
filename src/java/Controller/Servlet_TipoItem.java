@@ -1,6 +1,7 @@
 package Controller;
 
 import Application.Apl_Default;
+import Model.TipoItem;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Servlet_TipoItem", urlPatterns = {"/TipoItem"})
 public class Servlet_TipoItem extends HttpServlet {
+    
+    private static String tabela = "TipoItem";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -25,21 +28,63 @@ public class Servlet_TipoItem extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        String acao = request.getParameter("acao");
+        String url = "List.jsp?list_type="+tabela;
         
+        // Verifica a ação do usuário informada na URL
+        String acao = request.getParameter("acao");        
         if(acao != null ) {
             
+            // Cadastrar
             if(acao.equals("cad")){
+                
                 String nome = request.getParameter("nome");
-                if(Application.Apl_TipoItem.incluir(nome) == Application.Apl_TipoItem.RESULT_OK){}
+                
+                if(Application.Apl_TipoItem.incluir(nome) == Application.Apl_TipoItem.RESULT_OK){
+                    url = url + "&erro=0";
+                } else {
+                    url = url + "&erro=1";
+                }
+            }
+            
+            // Update
+            if(acao.equals("upd")){
+                
+                // Object data
+                int id      = Integer.parseInt(request.getParameter("id"));
+                String nome = request.getParameter("nome");
+                
+                // Main Object
+                TipoItem obj = (TipoItem) Apl_Default.getRegistro(tabela, id);
+                
+                // Set object values
+                obj.setNome(nome);
+                
+                try {
+                    if(Application.Apl_TipoItem.update(obj) == Application.Apl_Default.RESULT_OK){}
+                } catch (Exception ex) {}
+                
+            }
+            
+            // Deletar
+            if(acao.equals("del")){
+                
+                int id = Integer.parseInt(request.getParameter("id"));
+                
+                try {
+                    if(Application.Apl_TipoItem.deletar(tabela, id) == Application.Apl_Default.RESULT_OK){
+                        url = url + "&erro=0";
+                    } else {
+                        url = url + "&erro=1";
+                    }
+                } catch (Exception ex) {}
+                
             }
             
         }
 		
-        request.getRequestDispatcher("ListTipoItem.jsp").forward(request,response);
+        response.sendRedirect(url);
         
     }
     

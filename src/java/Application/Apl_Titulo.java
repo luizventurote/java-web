@@ -15,6 +15,7 @@ import Model.Categoria;
 import Model.Classe;
 import Model.Diretor;
 import Model.Distribuidor;
+import Model.TipoItem;
 import Model.Titulo;
 import Util.FormBuild;
 import java.sql.SQLException;
@@ -172,7 +173,7 @@ public class Apl_Titulo extends Apl_Default {
         String form =   "<tr>"+
                             "<th scope='row'>" + o.getId() + "</th>" + 
                             "<td>" + o.getNome() + "</td>"+
-                            "<td>"+Apl_Diretor.getFormActions(classMainName, o.getId())+"</td>"+
+                            "<td>"+Apl_Default.getFormActions(classMainName, o.getId())+"</td>"+
                         "</tr>";
         
         return form;

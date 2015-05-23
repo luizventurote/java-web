@@ -368,13 +368,12 @@ public class Apl_Titulo extends Apl_Default {
         registros = Servlet_Ator.consultarTodosRegistros();
         Iterator<Ator> at = registros.iterator();
         
-        
-        
-                            
+        boolean ator_sing = false;
+                  
         while (at.hasNext()){				
             Ator o = (Ator)at.next();
             
-           /* 
+     
             Iterator<Ator> sub_at = obj.getAtores().iterator();
             
             while(sub_at.hasNext()) {
@@ -382,20 +381,19 @@ public class Apl_Titulo extends Apl_Default {
                 Ator sub_o = (Ator) sub_at.next();
                 
                 if(sub_o.getId() == o.getId()) {
-                    form = form + "<option value='"+o.getId()+"' selected>"+o.getNome()+"</option>";
-                } else {
-                    form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
-                }
+                    ator_sing = true;
+                } 
                 
             }
-           
-                */
-                
-                
-     
             
+            if(ator_sing) {
+                form = form + "<option value='"+o.getId()+"' selected>"+o.getNome()+"</option>";
+            } else {
+                form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
+            }
             
-            							
+            ator_sing = false;
+              							
         }
         
         form = form +"</select></div>";
@@ -412,7 +410,13 @@ public class Apl_Titulo extends Apl_Default {
                             
         while (dir.hasNext()){				
             Diretor o = (Diretor)dir.next();
-            form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";						
+            
+            if(obj.getClasse().getId() == o.getId()) {
+                form = form + "<option value='"+o.getId()+"' selected>"+o.getNome()+"</option>";
+            } else {
+                form = form + "<option value='"+o.getId()+"'>"+o.getNome()+"</option>";
+            }
+            				
         }
         
         form = form + "</select></div>";
@@ -421,7 +425,7 @@ public class Apl_Titulo extends Apl_Default {
         // Sinopse
         form = form + "<div class='form-group'>\n" +
                         "<label for='exampleInput'>Sinopse</label>\n" +
-                        "<textarea class='form-control' rows='3' name='sinopse'></textarea>\n" +
+                        "<textarea class='form-control' rows='3' name='sinopse'>"+obj.getSinopse()+"</textarea>\n" +
                       "</div>";
         
         
@@ -435,7 +439,13 @@ public class Apl_Titulo extends Apl_Default {
                             
         while (dis.hasNext()){					
             Distribuidor o = (Distribuidor)dis.next();
-            form = form + "<option value='"+o.getCnpj()+"'>"+o.getRazaoSocial()+"</option>";							
+            
+            if(obj.getDistribuidor().getCnpj() == o.getCnpj()) {
+                form = form + "<option value='"+o.getCnpj()+"' selected>"+o.getRazaoSocial()+"</option>";
+            } else {
+                form = form + "<option value='"+o.getCnpj()+"'>"+o.getRazaoSocial()+"</option>";
+            }
+            
         }
         
         form = form + "</select></div>";

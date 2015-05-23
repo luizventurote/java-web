@@ -79,12 +79,34 @@ public class Servlet_Titulo extends HttpServlet {
                 // Object data
                 int id      = Integer.parseInt(request.getParameter("id"));
                 String nome = request.getParameter("nome");
+                String sinopse = request.getParameter("sinopse");
+                String diretor = request.getParameter("diretor");
+                String ano = request.getParameter("ano");
+                String categoria = request.getParameter("categoria");
+                String classe = request.getParameter("classe");
+                String distribuidor = request.getParameter("distribuidor");
+                String atores[] = request.getParameterValues("atores");
+                Set<Ator> ator = new HashSet<Ator>();
+                
+                //Recupera registros
+                ator = Apl_Default.getRegistros("Ator", atores);
+                Diretor dir = (Diretor) Apl_Default.getRegistro("Diretor", Integer.parseInt( diretor ));
+                Classe cla = (Classe) Apl_Default.getRegistro("Classe", Integer.parseInt( classe ));
+                Distribuidor dis = (Distribuidor) Apl_Default.getRegistro("Distribuidor", Integer.parseInt( distribuidor ));
+                Categoria cat = (Categoria) Apl_Default.getRegistro("Categoria", Integer.parseInt( categoria ));
                 
                 // Main Object
                 Titulo obj = (Titulo) Apl_Default.getRegistro(tabela, id);
                 
                 // Set object values
                 obj.setNome(nome);
+                obj.setAno(ano);
+                obj.setCategoria(cat);
+                obj.setClasse(cla);
+                obj.setAtores(ator);
+                obj.setDiretor(dir);
+                obj.setSinopse(sinopse);
+                obj.setDiretor(dir);
                 
                 try {
                     if(Application.Apl_Titulo.update(obj) == Application.Apl_Default.RESULT_OK){}

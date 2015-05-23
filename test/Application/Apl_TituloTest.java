@@ -1,5 +1,6 @@
 package Application;
 
+import Model.Ator;
 import Model.Titulo;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,7 +20,7 @@ public class Apl_TituloTest {
     @Test
     public void testGetList() {
         
-        
+        Titulo obj_titulo = (Titulo) Apl_Default.getRegistro("Titulo", 3);
         
         List reg = Apl_Default.consultarTodosRegistros("Titulo");
         
@@ -28,19 +29,33 @@ public class Apl_TituloTest {
         HashMap<String, String> mapa =  new HashMap();
         
         
-        while (models.hasNext()){
-								
-            Titulo o = (Titulo)models.next();
-            
-            mapa.put(Long.toString(o.getId()), o.getNome());
-									
-        }
-        
         System.out.println("------------------");
+        
+        Iterator<Ator> at = obj_titulo.getAtores().iterator();
              
-         System.out.println("\t" + mapa);
+        
+//        while (models.hasNext()){;
+//								
+//            Titulo o = (Titulo)models.next();
+//            
+//            o.getAtores().iterator();
+//            
+//            Iterator<Ator> at = o.getAtores().iterator();
+//                            
+//            while (at.hasNext()){			
+//                Ator obj = (Ator)at.next();
+//                System.out.println(obj.getId() + " - " + obj.getNome());							
+//            }
+//            
+//            //mapa.put(Long.toString(o.getId()), o.getNome());
+//									
+//        }
+        
+        
+        
+         //System.out.println("\t" + mapa);
          
-         System.out.println("\t" + mapa.get("1"));
+         //System.out.println("\t" + mapa.get("1"));
          
          System.out.println("------------------");
         

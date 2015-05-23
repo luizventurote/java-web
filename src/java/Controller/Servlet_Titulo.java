@@ -107,6 +107,7 @@ public class Servlet_Titulo extends HttpServlet {
                 obj.setDiretor(dir);
                 obj.setSinopse(sinopse);
                 obj.setDiretor(dir);
+                obj.setDistribuidor(dis);                
                 
                 try {
                     if(Application.Apl_Titulo.update(obj) == Application.Apl_Default.RESULT_OK){}

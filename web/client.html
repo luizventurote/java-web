@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Locadora Js</title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+	<style>
+
+		body {
+			padding: 20px;
+		}
+
+		.btn {
+			padding: 5px;
+		}
+
+		#formCliente {
+			padding: 10px 0;
+			display: none;
+		}
+
+		#clientes {
+			padding: 10px 0;
+		}
+
+	</style>
+
+</head>
+<body>
+
+    <button type="button" class="btn" id="btnFormCliente" onclick="openForm()">Cadastrar novo cliente</button>
+    
+    <form action="http://localhost:8080/java-web/resources/cliente/incluir/" id="formCliente" method="GET">
+
+    	<h2>Cadastrar cliente</h2>
+
+    	<table>
+    		<tr>
+    			<td>Nome</td>
+    			<td><input type="text" name="nome" required></td>
+    		</tr>
+    		<tr>
+    			<td>CPF</td>
+    			<td><input type="text" name="cpf" required></td>
+    		</tr>
+    		<tr>
+    			<td>Endereço</td>
+    			<td><input type="text" name="end" required></td>
+    		</tr>
+    		<tr>
+    			<td>Telefone</td>
+    			<td><input type="text" name="tel" required></td>
+    		</tr>
+    		<tr>
+    			<td>Sexo</td>
+    			<td><input type="text" name="sexo" required></td>
+    		</tr>
+    		<tr>
+    			<td>Data de Nascimento</td>
+    			<td><input type="text" name="data_nascimento" required></td>
+    		</tr>
+    		<tr>
+    			<td></td>
+    			<td><input type="submit"></td>
+    		</tr>
+    	</table>
+        
+    </form>
+
+	<div id="clientes"></div>
+
+	<script>
+	(function() {
+
+		var API = "http://localhost:8080/java-web/resources/cliente/";
+        var API_DELETAR = "http://localhost:8080/java-web/resources/cliente/deletar/";
+
+		$.getJSON( API, {
+			format: "json"
+		}).done(function( data ) {
+
+			$.each( data, function( i, item ) {
+
+				console.log(item);
+                                
+                                var el = $('<span>').html(
+                                        "Nome: " +item['nome'] + "<br>" +
+                                        "Nº de inscrição: " +item['numero_inscricao'] + "<br>" +
+                                        "CPF: " +item['cpf'] + "<br>" +
+                                        "Endereço " +item['endereco'] + "<br>" +
+                                        "Telefone " +item['telefone'] + "<br>" +
+                                        "<a href=''>Modificar</a> | " +
+                                        "<a href='"+API_DELETAR+item['numero_inscricao']+"'>Deletar</a><br><br>"
+                                        );
+                                
+                                var html = document.querySelector('#clientes').innerHTML;
+                                
+                                $('#clientes').html(html + el.html());
+
+			});
+
+		});
+
+	})();
+        
+    // Cadastrar novo cliente
+    function openForm() {
+
+    	$('#btnFormCliente').hide();
+        
+        $('#clientes').hide();
+    	
+    	$('#formCliente').show();
+
+    }
+        
+	</script>
+	
+</body>
+</html>

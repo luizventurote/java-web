@@ -3,6 +3,13 @@
 <!doctype html>
 <html lang="pt-br">
     <head>
+        
+        <%
+            String nomeUsuario = (String) session.getAttribute("usuarioautenticado");
+            if(nomeUsuario == null)
+                response.sendRedirect("login.jsp");
+        %>
+        
 
         <meta charset="UTF-8">
         <title>Locadora</title>

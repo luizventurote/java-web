@@ -28,12 +28,14 @@
 
             <fieldset>
 
-                <form action="javascript:void(0);" method="get">
+                <form action="login" method="POST">
 
-                    <input type="email" required value="Email" onBlur="if(this.value=='')this.value='Email'" onFocus="if(this.value=='Email')this.value='' "> <!-- JS because of IE support; better: placeholder="Email" -->
+                    <input type="email" name="email" required value="admin@locadora.com" > 
 
-                    <input type="password" required value="Password" onBlur="if(this.value=='')this.value='Password'" onFocus="if(this.value=='Password')this.value='' "> <!-- JS because of IE support; better: placeholder="Password" -->
-
+                    <input type="password" name="password" required value="Password" > 
+                    
+                    <input type="hidden" name="acao" value="login">
+                    
                     <input type="submit" value="Login">
 
                     <footer class="clearfix">

@@ -35,7 +35,7 @@
 
       </ul>
 
-      <button type="button" class="btn btn-danger btn-xs loguot">Sair</button>
+      <a href="logout.jsp" class="btn btn-danger btn-xs loguot">Sair</a>
     
     </div>
 

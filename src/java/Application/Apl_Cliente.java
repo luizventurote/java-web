@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import Util.FormBuild;
+import java.sql.SQLException;
+import org.hibernate.HibernateException;
 
 /**
  * @author Luiz Venturote
@@ -51,6 +53,67 @@ public class Apl_Cliente extends Apl_Default {
 	session.close();
 		
 	return RESULT_OK;
+    }
+    
+    
+    
+    
+    /**
+     * Atualizar
+     */
+    public static int update(Cliente obj) throws Exception, SQLException, HibernateException {
+        
+        // Open Session
+        Session session = openSession();
+
+        try {
+
+            session.beginTransaction();
+            session.update(obj);
+            session.getTransaction().commit();
+
+        } catch (HibernateException he) {
+            session.getTransaction().rollback();
+            return RESULT_ERRO;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        
+        return RESULT_OK;
+        
+    }
+    
+    
+    
+    /**
+     * Deletar
+     */
+    public static int deletar(String tabela, int id) throws Exception, SQLException, HibernateException {
+        
+        // Get object
+        Cliente obj = (Cliente) getRegistro(tabela, id);
+        
+        // Open Session
+        Session session = openSession();
+
+        try {
+
+            // Delect object
+            session.beginTransaction();
+            session.delete(obj);
+            session.getTransaction().commit();
+
+        } catch (HibernateException he) {
+            session.getTransaction().rollback();
+            return RESULT_ERRO;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return RESULT_OK;
     }
     
     /**

@@ -72,8 +72,8 @@ public class Api_Cliente {
             @QueryParam("cpf") String cpf,
             @QueryParam("data_nascimento") String data_nascimento
             ){
-        
-        char s = sexo.charAt(0);
+         
+        char s = sexo.charAt(0);   
         
         return Application.Apl_Cliente.incluirSocio(nome, endereco, telefone, s, cpf, data_nascimento); 
         
@@ -93,9 +93,26 @@ public class Api_Cliente {
             @QueryParam("data_nascimento") String data_nascimento
             ) throws Exception{
         
-        Cliente obj = (Cliente) Apl_Cliente.getRegistro("Cliente", id);
+        Socio obj = (Socio) Apl_Cliente.getRegistro("Cliente", id);
         
+        if(nome != null)
         obj.setNome(nome);
+        
+        if(endereco != null)
+        obj.setEndereco(endereco);
+        
+        if(telefone != null)
+        obj.setTelefone(telefone);
+        
+        if(cpf != null)
+        obj.setCpf(cpf);
+        
+        if(sexo != null) {
+            char s = sexo.charAt(0);
+            obj.setSexo(s);
+        }        
+        
+        if(data_nascimento != null)
         obj.setData_nascimento(data_nascimento);
         
         return Application.Apl_Cliente.update(obj);

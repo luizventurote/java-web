@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Locadora Js</title>
-	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<title>Locadora Js</title>  
+     
+    <link rel="stylesheet" href="build/css/bootstrap.min.css">
+    
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+ 
+    <script type="text/javascript" src="build/js/lib/bootstrap.min.js"></script>
 
 	<style>
 
@@ -11,13 +16,8 @@
 			padding: 20px;
 		}
 
-		.btn {
-			padding: 5px;
-		}
-
-		#formCliente {
-			padding: 10px 0;
-			display: none;
+		.btn { 
+			padding: 5px; 
 		}
 
 		#clientes {
@@ -29,46 +29,128 @@
 </head>
 <body>
 
-    <button type="button" class="btn" id="btnFormCliente" onclick="openForm()">Cadastrar novo cliente</button>
-    
-    <form action="http://localhost:8080/java-web/resources/cliente/incluir/" id="formCliente" method="GET">
-
-    	<h2>Cadastrar cliente</h2>
-
-    	<table>
-    		<tr>
-    			<td>Nome</td>
-    			<td><input type="text" name="nome" required></td>
-    		</tr>
-    		<tr>
-    			<td>CPF</td>
-    			<td><input type="text" name="cpf" required></td>
-    		</tr>
-    		<tr>
-    			<td>Endereço</td>
-    			<td><input type="text" name="end" required></td>
-    		</tr>
-    		<tr>
-    			<td>Telefone</td>
-    			<td><input type="text" name="tel" required></td>
-    		</tr>
-    		<tr>
-    			<td>Sexo</td>
-    			<td><input type="text" name="sexo" required></td>
-    		</tr>
-    		<tr>
-    			<td>Data de Nascimento</td>
-    			<td><input type="text" name="data_nascimento" required></td>
-    		</tr>
-    		<tr>
-    			<td></td>
-    			<td><input type="submit"></td>
-    		</tr>
-    	</table>
+    <div class="row">
         
-    </form>
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-primary" id="btnFormCliente" data-toggle="modal" data-target="#modalCadCliente">Cadastrar novo cliente</button>
+        </div>
 
-	<div id="clientes"></div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalCadCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <form action="" id="formCliente" method="GET">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Cadastrar cliente</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nome</label>
+                                <input type="text" class="form-control" name="nome" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>CPF</label>
+                                <input type="text" class="form-control" name="cpf" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Endereço</label>
+                                <input type="text" class="form-control" name="end" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Telefone</label>
+                                <input type="text" class="form-control" name="telefone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Sexo</label>
+                                <input type="text" class="form-control" name="sexo" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Data de Nascimento</label>
+                                <input type="text" class="form-control" name="data_nascimento" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalUpdCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <form action="" id="formUpdCliente" method="GET">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Alterar cliente</h4>
+                        </div>
+                        <div class="modal-body">
+                
+                            <input type="hidden" name="id" value="">
+
+                            <div class="form-group">
+                                <label>Nome</label>
+                                <input type="text" class="form-control" name="nome" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>CPF</label>
+                                <input type="text" class="form-control" name="cpf" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Endereço</label>
+                                <input type="text" class="form-control" name="end" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Telefone</label>
+                                <input type="text" class="form-control" name="telefone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Sexo</label>
+                                <input type="text" class="form-control" name="sexo" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Data de Nascimento</label>
+                                <input type="text" class="form-control" name="data_nascimento" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div id="clientes"></div>
+        </div>
+
+    </div>
 
 	<script>
 	(function() {
@@ -90,8 +172,10 @@
                                         "CPF: " +item['cpf'] + "<br>" +
                                         "Endereço " +item['endereco'] + "<br>" +
                                         "Telefone " +item['telefone'] + "<br>" +
-                                        "<a href=''>Modificar</a> | " +
-                                        "<a href='"+API_DELETAR+item['numero_inscricao']+"'>Deletar</a><br><br>"
+                                        "Nascimento " +item['data_nascimento'] + "<br>" +
+                                        "Sexo " +item['sexo'] + "<br>" +
+                                        "<a href='#' onClick='loadValues(\"" +item['numero_inscricao'] + "\", \"" +item['nome'] + "\", \"" +item['cpf'] + "\", \"" +item['endereco'] + "\", \"" +item['telefone'] + "\", \"" +item['data_nascimento'] + "\", \"" +item['sexo'] + "\")' data-toggle='modal' data-target='#modalUpdCliente'>Alterar</a> | " +
+                                        "<a href='#' onClick='deleteItem("+item['numero_inscricao']+")'>Deletar</a><br><br>"
                                         );
                                 
                                 var html = document.querySelector('#clientes').innerHTML;
@@ -114,8 +198,91 @@
     	$('#formCliente').show();
 
     }
+    
+    function closeForm() {
+
+    	$('#btnFormCliente').show();
         
-	</script>
+        $('#clientes').show();
+    	
+    	$('#formCliente').hide();
+
+    }
+    
+    function loadValues(numero_inscricao, nome, cpf, endereco, telefone, data_nascimento, sexo) {
+
+        document.querySelector('#modalUpdCliente input[name="id"]').value = numero_inscricao;
+        document.querySelector('#modalUpdCliente input[name="nome"]').value = nome;
+        document.querySelector('#modalUpdCliente input[name="cpf"]').value = cpf;
+        document.querySelector('#modalUpdCliente input[name="end"]').value = endereco;
+        document.querySelector('#modalUpdCliente input[name="telefone"]').value = telefone;
+        document.querySelector('#modalUpdCliente input[name="data_nascimento"]').value = data_nascimento;
+        document.querySelector('#modalUpdCliente input[name="sexo"]').value = sexo;
+    }
+  
+    
+    // Submit form
+    jQuery('#formCliente').submit(function(){
+            var dados = jQuery( this ).serialize();
+
+            jQuery.ajax({
+                type: "GET",
+                url: "http://localhost:8080/java-web/resources/cliente/incluir/",
+                data: dados,
+                success: function( data )
+                {
+                    alert("Cadastro realizado com sucesso!");
+                                        location.reload();
+                }
+            });
+            
+            return false;
+    });
+    
+  
+    
+    // Submit form update
+    jQuery('#formUpdCliente').submit(function(){
+            var dados = jQuery( this ).serialize();
+
+            jQuery.ajax({
+                type: "GET",
+                url: "http://localhost:8080/java-web/resources/cliente/alterar/",
+                data: dados,
+                success: function( data )
+                {
+                    alert("Cliente alterado com sucesso!");
+                                        location.reload();
+                }
+            });
+            
+            return false;
+    });
+    
+    
+    // Delete
+    function deleteItem(idItem) {
+        
+        jQuery.ajax({
+            type: "GET",
+            url: "http://localhost:8080/java-web/resources/cliente/deletar/"+idItem,
+            success: function(data) {
+                
+                if(data == 0) {
+                    alert("Não foi possível deletar esse registro!");
+                } else {
+                    alert("Item deletado!");
+                    location.reload();
+                }               
+                
+            }
+        });
+        
+    }
+                
+   
+        
+    </script>
 	
 </body>
 </html>
